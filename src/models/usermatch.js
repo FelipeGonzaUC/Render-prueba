@@ -1,7 +1,6 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class UserMatch extends Model {
     /**
@@ -18,9 +17,22 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
   }
+
   UserMatch.init({
+    username: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      primaryKey: true // Assuming this is part of your composite key
+    },
+    matchId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true // Assuming this is part of your composite key
+    }
+  }, {
     sequelize,
     modelName: 'UserMatch',
   });
+
   return UserMatch;
 };
