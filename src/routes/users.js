@@ -87,4 +87,24 @@ router.put('/:id', async (ctx) => {
       }
 });
 
+router.delete('/:id', async (ctx) => {
+  try {
+      const user = await User.findByPk(ctx.params.id);
+  
+      if (!user) {
+        ctx.status = 404;
+        ctx.body = { error: 'group not found'};
+        return;
+      }
+
+      await user.destroy();
+      ctx.status = 204;
+      ctx.body = user;
+
+  } catch (error) {
+      ctx.status = 500;
+      ctx.body = { error: error.message};
+  }
+});
+
 module.exports = router;
