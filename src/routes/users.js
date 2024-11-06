@@ -67,4 +67,24 @@ router.get('/:username/match', async (ctx) => {
       }
 });
 
+router.put('/:id', async (ctx) => {
+    try {
+        const user = await User.findByPk(ctx.params.id);
+    
+        if (!user) {
+          ctx.status = 404;
+          ctx.body = { error: 'match not found'};
+          return;
+        }
+    
+        await user.update(ctx.request.body);
+        ctx.status = 200;
+        ctx.body = user;
+    
+      } catch (error) {
+        ctx.status = 500;
+        ctx.body = { error: error.message};
+      }
+});
+
 module.exports = router;
