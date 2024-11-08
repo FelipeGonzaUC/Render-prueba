@@ -83,7 +83,6 @@ router.put('/:id', async (ctx) => {
     const JWT_PRIVATE_KEY = process.env.JWT_SECRET;
     try {
         const user = await User.findByPk(ctx.params.id);
-    
         if (!user) {
           ctx.status = 404;
           ctx.body = { error: 'match not found'};
