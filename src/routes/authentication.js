@@ -44,6 +44,7 @@ router.post("authetication.signup", "/signup", async (ctx) => {
         "access_token": token,
         "token_type": "Bearer",
         "expires_in": expirationSeconds,
+        "username": user.username,
     };
     ctx.status = 201;
 });
@@ -65,7 +66,7 @@ router.post("authentication.login", "/login", async (ctx) => {
         return; 
     }
 
-    const checkPassword = await bcrypt.compare(authInfo.password, hash);
+    const checkPassword = await bcrypt.compare(authInfo.password, user.password);
 
     if (checkPassword) {
         ctx.body = {
@@ -78,8 +79,6 @@ router.post("authentication.login", "/login", async (ctx) => {
         return;
     }
 
-    const expirationSeconds = 1 * 60 * 60 * 24;
-    const JWT_PRIVATE_KEY = process.env.JWT_SECRET;
     var token = jwt.sign(
         {scope: ['user']},
         JWT_PRIVATE_KEY,
@@ -90,6 +89,7 @@ router.post("authentication.login", "/login", async (ctx) => {
         "access_token": token,
         "token_type": "Bearer",
         "expires_in": expirationSeconds,
+        "username": user.username,
     }
     ctx.status = 200;
 })

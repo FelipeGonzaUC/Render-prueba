@@ -9,13 +9,16 @@ const auth = require('./routes/authentication');
 
 const router = new Router();
 
+dotenv.config();
+
+//router.use('/users', users.routes());
 router.use('/groups', chats.routes());
 router.use('/invitations', messages.routes());
 router.use('/matches', users.routes());
-router.use('/users', users.routes());
 router.use(auth.routes());
 
-router.use(jwtMiddleware( { secret: process.env.JWT_SECRET } ));
 //Colocar Desde Aqui Rutas Protegidas
+router.use(jwtMiddleware( { secret: process.env.JWT_SECRET } ));
+router.use('/users', users.routes());
 
 module.exports = router;
