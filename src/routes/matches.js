@@ -17,10 +17,12 @@ router.post('/', async (ctx) => {
     }
 });
 
-router.get('/private=false', async (ctx) => {
+router.get('/private&toStart', async (ctx) => {
     try {
         const matches = await Match.findAll({
-            where: {private: false,}
+            where: {
+              [Op.and]: [{ private: false }, { state: 'no iniciada' }]
+            },
         });
         
         ctx.body = matches;
