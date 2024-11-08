@@ -41,13 +41,25 @@ yarn sequelize-cli init
 ```
 
 ## Bycript
+Bycrypt es una libreria que nos permite definir propiedades para encriptar datos.
+```
+yarn add bcrypt
+```
 
 ## Dotenv
+Dotenv es una libreria que permite cargar variables de archivos .env
+```
+yarn add dotenv
+```
 
 ## Jsonwebtoken
+Jsonwebtoken es una libreria que nos permite implementar Tokens.
+```
+yarn add jsonwebtoken
+```
 
 ## Postgres
-Postgres es una solución de base de datos relacional de código abierto 
+Postgres es una solución de base de datos relacional de código abierto.
 ```
 1. Como inicializar psql
 sudo service postgresql start
