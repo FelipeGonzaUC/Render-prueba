@@ -2,6 +2,7 @@ const Router = require('koa-router');
 const router = new Router();
 const { User } = require('../models');
 const { getAllUserGroups } = require('../models')
+const bcrypt = require('bcrypt');
 
 router.post('/', async (ctx) => {
     console.log(ctx.request.body);
@@ -68,6 +69,10 @@ router.get('/:username/match', async (ctx) => {
 });
 
 router.put('/:id', async (ctx) => {
+    //Expiracion del token
+    const expirationSeconds = 1 * 60 * 60 * 24;
+    //CLave JWT
+    const JWT_PRIVATE_KEY = process.env.JWT_SECRET;
     try {
         const user = await User.findByPk(ctx.params.id);
     
@@ -76,10 +81,23 @@ router.put('/:id', async (ctx) => {
           ctx.body = { error: 'match not found'};
           return;
         }
-    
-        await user.update(ctx.request.body);
-        ctx.status = 200;
-        ctx.body = user;
+        const checkPassword = await bcrypt.compare(ctx.request.body.confirm, user.password);
+        if (checkPassword) {
+          if (ctx.request.body.password) {
+            const saltRounds = 10;
+            const hashPassword = await bcrypt.hash(ctx.request.body.password, saltRounds);
+            ctx.request.body.password = hashPassword;
+          } else {
+            ctx.request.body.password = user.password;
+          }
+          await user.update(ctx.request.body);
+          ctx.status = 200;
+          ctx.body = user;
+        } else {
+          ctx.status = 400;
+          ctx.body = "Contraseña Incorrecta";
+          return;
+        }
     
       } catch (error) {
         ctx.status = 500;
