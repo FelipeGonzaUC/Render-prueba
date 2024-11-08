@@ -76,13 +76,13 @@ router.get('/:username/match', async (ctx) => {
       }
 });
 
-router.put('/:id', async (ctx) => {
+router.put('/:username', async (ctx) => {
     //Expiracion del token
     const expirationSeconds = 1 * 60 * 60 * 24;
     //CLave JWT
     const JWT_PRIVATE_KEY = process.env.JWT_SECRET;
     try {
-        const user = await User.findByPk(ctx.params.id);
+        const user = await User.findByPk(ctx.params.username);
         if (!user) {
           ctx.status = 404;
           ctx.body = { error: 'match not found'};
