@@ -15,7 +15,7 @@ async function isUser(ctx, next) {
     ctx.assert(scope.includes('user'), 403, "You are not a user");
 }
 
-//Funcion verificadora scope admin
+//Funcion verificadora scope admin siguiente entrega prob...
 
 async function isAdmin(ctx, next) {
     await next();

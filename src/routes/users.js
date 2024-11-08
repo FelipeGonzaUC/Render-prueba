@@ -3,6 +3,14 @@ const router = new Router();
 const { User } = require('../models');
 const { getAllUserGroups } = require('../models')
 const bcrypt = require('bcrypt');
+const authUtils = require("../lib/auth/jwt")
+/*
+*Ejemplo de proteccion de ruta, "/users/example" verifica si el token es de un user
+router.get("/example", authUtils.isUser, async (ctx) => {
+  ctx.body = {
+    message: "Acceso autorizado tu ser user"
+  }
+})*/
 
 router.post('/', async (ctx) => {
     console.log(ctx.request.body);

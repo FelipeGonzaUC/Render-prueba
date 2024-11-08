@@ -9,13 +9,14 @@ const auth = require('./routes/authentication');
 
 const router = new Router();
 
+router.use('/users', users.routes());
 router.use('/groups', chats.routes());
 router.use('/invitations', messages.routes());
 router.use('/matches', users.routes());
-router.use('/users', users.routes());
 router.use(auth.routes());
 
-router.use(jwtMiddleware( { secret: process.env.JWT_SECRET } ));
 //Colocar Desde Aqui Rutas Protegidas
+router.use(jwtMiddleware( { secret: process.env.JWT_SECRET } ));
+
 
 module.exports = router;
