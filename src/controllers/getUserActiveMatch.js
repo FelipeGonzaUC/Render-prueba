@@ -17,7 +17,7 @@ const getUserActiveMatch = async (username) => {
 
     const match = await Match.findOne({
       where: {
-        [Op.and]: [{ id: userMatchesIds }, { state: 'active' }]
+        [Op.and]: [{ id: userMatchesIds }, { state: 'en progreso' }]
       },
     });
 
